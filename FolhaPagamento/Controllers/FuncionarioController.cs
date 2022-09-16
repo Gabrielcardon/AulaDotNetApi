@@ -14,20 +14,24 @@ namespace FolhaPagamento.Controllers
    public class FuncionarioController : ControllerBase
     {
 
+      private readonly DataContext _context;
+
+   public FuncionarioController(DataContext context) => _context = context;
+   
 
     private static List<Funcionario> funcionarios = new List<Funcionario>();
 
 
     [HttpGet]
     [Route("Listar")]
-    public IActionResult Listar() => Ok(funcionarios);
+    public IActionResult Listar() => Ok(_context.Funcionarios.ToList());
 
     [HttpPost]
     [Route("cadastrar")]
    public IActionResult Cadastrar([FromBody] Funcionario funcionario)
    {
-     
-     funcionarios.Add(funcionario);
+     _context.Funcionarios.Add(funcionario);
+     _context.SaveChanges();
      return Created("",funcionario);
 
    }
@@ -37,7 +41,7 @@ namespace FolhaPagamento.Controllers
     public IActionResult Buscar([FromRoute] string cpf)
     {
       
-      Funcionario funcionario = funcionarios.FirstOrDefault(
+      Funcionario funcionario = _context.Funcionarios.FirstOrDefault(
       funcionarioCadastrado => funcionarioCadastrado.Cpf.Equals(cpf)
       );
      

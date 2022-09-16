@@ -13,5 +13,6 @@ namespace FolhaPagamento.Models
     
     public DbSet<Funcionario> Funcionarios { get; set; }
 
+    public DbSet<FolhaPagamento> Folhas {get; set; }
     }
 }
