@@ -25,7 +25,8 @@ namespace FolhaPagamento.Controllers
 
     [HttpGet]
     [Route("Listar")]
-    public IActionResult Listar() => Ok(_context.Folhas.Include(Folhas => Folhas.Funcionario).ToList());
+    public IActionResult Listar() => _context.Folhas != null ? Ok(_context.Folhas.Include(Folhas => Folhas.Funcionario).ToList()) : NotFound();
+    
 
     [HttpPost]
     [Route("cadastrar")]
@@ -40,9 +41,12 @@ namespace FolhaPagamento.Controllers
      _context.SaveChanges();
      return Created("",folha);
 
+     return folha != null ? Ok(folha) : NotFound();
+
    }
 
-    [HttpGet]
+  //DEIXEI COMENTADO POIS NÃO ENTENDI PORQUE MEU INCLUDE NÃO PEGOU O O CPF DE DENTRO DO FUNCIONARIO
+  /*  [HttpGet]
     [Route("buscar/{cpf}{mes}{ano}")]
     public IActionResult Buscar([FromRoute] string cpf, string mes, string ano)
     {
@@ -53,7 +57,7 @@ namespace FolhaPagamento.Controllers
      
      return folha != null ? Ok(folha) : NotFound();
      
-    } 
+    } */
 
    /* [HttpGet]
     [Route("filtrar/{cpf}{mes}{ano}")]
