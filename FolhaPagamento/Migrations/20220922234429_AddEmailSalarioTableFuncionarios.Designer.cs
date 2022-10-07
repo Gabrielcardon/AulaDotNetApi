@@ -3,53 +3,28 @@ using System;
 using FolhaPagamento.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FolhaPagamento.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220922234429_AddEmailSalarioTableFuncionarios")]
+    partial class AddEmailSalarioTableFuncionarios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.17");
 
-            modelBuilder.Entity("FolhaPagamento.Models.Folha", b =>
+            modelBuilder.Entity("FolhaPagamento.Models.FolhaPagamento", b =>
                 {
-                    b.Property<int>("FolhaId")
+                    b.Property<int>("FolhaPagamentoId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("FuncionarioId")
-                        .HasColumnType("INTEGER")
-                        .HasColumnName("Id");
-
-                    b.Property<int>("impostoFgts")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("impostoInss")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("impostoRenda")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("quantidadeHoras")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("salarioBruto")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("salarioLiquido")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("valorhora")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("FolhaId");
-
-                    b.HasIndex("FuncionarioId");
+                    b.HasKey("FolhaPagamentoId");
 
                     b.ToTable("Folhas");
                 });
@@ -84,17 +59,6 @@ namespace FolhaPagamento.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Funcionarios");
-                });
-
-            modelBuilder.Entity("FolhaPagamento.Models.Folha", b =>
-                {
-                    b.HasOne("FolhaPagamento.Models.Funcionario", "Funcionario")
-                        .WithMany()
-                        .HasForeignKey("FuncionarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Funcionario");
                 });
 #pragma warning restore 612, 618
         }

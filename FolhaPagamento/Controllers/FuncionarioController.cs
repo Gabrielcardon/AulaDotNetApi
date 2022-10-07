@@ -30,6 +30,7 @@ namespace FolhaPagamento.Controllers
     [Route("cadastrar")]
    public IActionResult Cadastrar([FromBody] Funcionario funcionario)
    {
+
      _context.Funcionarios.Add(funcionario);
      _context.SaveChanges();
      return Created("",funcionario);
@@ -65,14 +66,19 @@ namespace FolhaPagamento.Controllers
     } 
 
     [HttpDelete]
-    [Route("deletar/{cpf}")]
-    public IActionResult deletar([FromRoute] string cpf)
+    [Route("deletar/{id}")]
+    public IActionResult deletar([FromRoute] int id)
     {
       
-      Funcionario funcionario = funcionarios.FirstOrDefault(funcionarioCadastrado => funcionarioCadastrado.Cpf.Equals(cpf));
+     
+    //  Funcionario funcionario = _context.Funcionarios.FirstOrDefault(funcionarioCadastrado => funcionarioCadastrado.Id == id);
+
+      Funcionario funcionario = _context.Funcionarios.Find(id);
+
       if(funcionario != null)
       {
-        funcionarios.Remove(funcionario);
+        _context.Funcionarios.Remove(funcionario);
+        _context.SaveChanges();
         return Ok(funcionario);
       }
       return NotFound();
@@ -81,19 +87,22 @@ namespace FolhaPagamento.Controllers
 
      [HttpPatch]
     [Route("alterar")]
-    public IActionResult deletar([FromBody] Funcionario funcionario)
-    {
+    public IActionResult Alterar([FromBody] Funcionario funcionario)
+    //{
       
-      Funcionario funcionarioBuscado = funcionarios.FirstOrDefault(
+      /*Funcionario funcionarioBuscado = funcionarios.FirstOrDefault(
         funcionarioCadastrado => funcionarioCadastrado.Cpf.Equals(funcionario.Cpf));
-      if(funcionarioBuscado != null)
+      if(funcionarioBuscado != null)*/
       {
-        funcionarioBuscado.Nome = funcionario.Nome;
+      //  funcionarioBuscado.Nome = funcionario.Nome;
+
+       _context.Funcionarios.Update(funcionario);
+        _context.SaveChanges();
         return Ok(funcionario);
       }
-      return NotFound();
+   //   return NotFound();
      
-    } 
+    //} 
 
   /*  [HttpPut]
     [Route("editar/{nome}")]
